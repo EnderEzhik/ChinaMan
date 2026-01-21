@@ -1,0 +1,16 @@
+﻿<Window x:Class="ChinaMan.AddViewedMovieWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChinaMan"
+        mc:Ignorable="d"
+        Title="AddViewedMovieWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBox x:Name="MovieTitleInput" TextWrapping="Wrap" Text="Название" Width="120" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-200,0,0"/>
+        <TextBox x:Name="MovieDescriptionInput" TextWrapping="Wrap" Text="Описание" Width="120" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-100,0,0"/>
+        <TextBox x:Name="MovieRatingInput" TextWrapping="Wrap" Text="Оценка" Width="120" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Calendar x:Name="MovieViewedDate" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200" Margin="0,0,-500,-150"/>
+        <Button Content="Добавить" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0" Click="Button_Click"/>
+    </Grid>
+</Window>

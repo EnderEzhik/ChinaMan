@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChinaMan"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
+        Title="ChinaMan" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.9*"/>
+            <ColumnDefinition Width="0.1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="0.2*"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Column="0" Grid.Row="1" SelectionMode="Single" ItemsSource="{Binding ViewedMovies}" Loaded="ListView_Loaded">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="250">Название</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Description}" Width="250">Описание</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding ViewedDate}" Width="150">Дата просмотра</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Rating}" Width="100">Оценка</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click">Добавить просмотр</Button>
     </Grid>
 </Window>

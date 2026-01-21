@@ -1,6 +1,5 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
+using ChinaMan.Database;
 
 namespace ChinaMan
 {
@@ -9,6 +8,18 @@ namespace ChinaMan
     /// </summary>
     public partial class App : Application
     {
+        public static void InitDatabase()
+        {
+            using (ApplicationContext context = CreateDbContext())
+            {
+                context.Database.EnsureCreated();
+            }
+        }
+
+        public static ApplicationContext CreateDbContext()
+        {
+            return new ApplicationContext();
+        }
     }
 
 }

@@ -1,13 +1,5 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using ChinaMan.ViewModels;
 
 namespace ChinaMan
 {
@@ -16,9 +8,30 @@ namespace ChinaMan
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MainViewModel viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
+            App.InitDatabase();
+            viewModel = new MainViewModel();
+            this.DataContext = viewModel;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new AddViewedMovieWindow().Show();
+        }
+
+        private void ListView_Loaded(object sender, RoutedEventArgs e)
+        {
+            using var dbContext = App.CreateDbContext();
+            var movies = dbContext.viewedMovies.ToList();
+
+            foreach (var movie in movies)
+            {
+                viewModel.ViewedMovies.Add(movie);
+            }
         }
     }
 }
