@@ -2,31 +2,26 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ChinaMan.Models;
+using ChinaMan.ViewModels.Base;
 
 namespace ChinaMan.ViewModels
 {
-    internal class MainViewModel : INotifyPropertyChanged
+    internal class MainViewModel : BaseViewModel
     {
         public static MainViewModel Instance { get; private set; }
 
+        #region Просмотренные фильмы
         private ObservableCollection<ViewedMovie> _viewedMovies;
 
+        /// <summary>
+        /// Список просмотренных фильмов
+        /// </summary>
         public ObservableCollection<ViewedMovie> ViewedMovies
         {
             get => _viewedMovies;
-            set
-            {
-                _viewedMovies = value;
-                OnPropertyChanged();
-            }
+            set => Set(ref _viewedMovies, value);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        #endregion
 
         public MainViewModel()
         {
