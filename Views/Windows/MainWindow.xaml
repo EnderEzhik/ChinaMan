@@ -9,38 +9,74 @@
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.9*"/>
-            <ColumnDefinition Width="0.1*"/>
-        </Grid.ColumnDefinitions>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="0.7*"/>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Column="0" Grid.Row="1" SelectionMode="Single" ItemsSource="{Binding ViewedMovies}" Loaded="ListView_Loaded">
-            <ListView.ContextMenu>
+
+        <DockPanel Grid.Row="0" Margin="0,0,0,10" LastChildFill="False">
+            <Button Content="Добавить просмотр"
+                    Width="150"
+                    Height="30"
+                    Margin="0,0,10,0"
+                    DockPanel.Dock="Left"/>
+            <StackPanel Orientation="Horizontal"
+                        DockPanel.Dock="Right"
+                        VerticalAlignment="Center">
+                <TextBlock Text="Поиск:"
+                           VerticalAlignment="Center"
+                           Margin="0,0,5,0"/>
+                <TextBox Width="200"
+                         Height="24"
+                         ToolTip="Поиск по названию фильма"/>
+            </StackPanel>
+        </DockPanel>
+
+        <ListView Grid.Row="1"
+                  Margin="0,0,0,10"
+                  SelectionMode="Single"
+                  ItemsSource="{Binding ViewedMovies}"
+                  Loaded="ListView_Loaded">
+            <!--<ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Удалить"></MenuItem>
                 </ContextMenu>
-            </ListView.ContextMenu>
+            </ListView.ContextMenu>-->
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
-                    <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="250">Название</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Description}" Width="250">Описание</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding ViewedDate}" Width="150">Дата просмотра</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Rating}" Width="100">Оценка</GridViewColumn>
-                    <GridViewColumn Width="100">
+                    <GridViewColumn Header="Название"
+                                    DisplayMemberBinding="{Binding Title}"
+                                    Width="250"/>
+                    <GridViewColumn Header="Описание"
+                                    DisplayMemberBinding="{Binding Description}"
+                                    Width="250"/>
+                    <GridViewColumn Header="Последняя дата просмотра"
+                                    DisplayMemberBinding="{Binding LastWatchedDate, StringFormat=\{0:dd.MM.yyyy\}}"
+                                    Width="150"/>
+                    <GridViewColumn Header="Средняя оценка"
+                                    DisplayMemberBinding="{Binding AverageRating, StringFormat=\{0:F1\}}"
+                                    Width="100"/>
+                    <GridViewColumn Header="Количество просмотров"
+                                    DisplayMemberBinding="{Binding ViewsCount}"
+                                    Width="100"/>
+                    <!--<GridViewColumn Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Click="Button_Click_1">X</Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    </GridViewColumn>-->
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click">Добавить просмотр</Button>
+        <!--<Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click">Добавить просмотр</Button>-->
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock Text="Готово"/>
+            </StatusBarItem>
+            <!-- В будущем сюда можно выводить, например, количество фильмов: "Фильмов: 15" -->
+        </StatusBar>
     </Grid>
 </Window>
