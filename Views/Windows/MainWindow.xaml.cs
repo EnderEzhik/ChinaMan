@@ -15,7 +15,6 @@ namespace ChinaMan
         public MainWindow()
         {
             InitializeComponent();
-            App.InitDatabase();
             dbContext = App.CreateDbContext();
         }
 
@@ -26,6 +25,9 @@ namespace ChinaMan
 
         private void ListView_Loaded(object sender, RoutedEventArgs e)
         {
+            var viewModel = (MainViewModel)this.DataContext;
+
+            dbContext.Films.ToList().ForEach(viewModel.Films.Add);
         }
     }
 }

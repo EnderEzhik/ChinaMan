@@ -31,13 +31,15 @@
                     Width="80"
                     Height="28"
                     Margin="0,0,8,0"
-                    IsCancel="True"/>
+                    IsCancel="True"
+                    Click="CancelButton_Click"/>
             <Button x:Name="SaveButton"
                     Content="Добавить"
                     Width="80"
                     Height="28"
                     IsDefault="True"
-                    Command="{Binding SaveCommand}" />
+                    Command="{Binding SaveCommand}"
+                    Click="SaveButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>
