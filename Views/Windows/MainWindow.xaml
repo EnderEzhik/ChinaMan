@@ -21,57 +21,23 @@
                     Width="150"
                     Height="30"
                     Margin="0,0,10,0"
-                    DockPanel.Dock="Left"/>
-            <StackPanel Orientation="Horizontal"
-                        DockPanel.Dock="Right"
-                        VerticalAlignment="Center">
-                <TextBlock Text="Поиск:"
-                           VerticalAlignment="Center"
-                           Margin="0,0,5,0"/>
-                <TextBox Width="200"
-                         Height="24"
-                         ToolTip="Поиск по названию фильма"/>
-            </StackPanel>
+                    DockPanel.Dock="Left"
+                    Click="Button_Click"/>
         </DockPanel>
 
         <ListView Grid.Row="1"
                   Margin="0,0,0,10"
                   SelectionMode="Single"
-                  ItemsSource="{Binding ViewedMovies}"
+                  ItemsSource="{Binding Films}"
                   Loaded="ListView_Loaded">
-            <!--<ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Удалить"></MenuItem>
-                </ContextMenu>
-            </ListView.ContextMenu>-->
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                     <GridViewColumn Header="Название"
                                     DisplayMemberBinding="{Binding Title}"
-                                    Width="250"/>
-                    <GridViewColumn Header="Описание"
-                                    DisplayMemberBinding="{Binding Description}"
-                                    Width="250"/>
-                    <GridViewColumn Header="Последняя дата просмотра"
-                                    DisplayMemberBinding="{Binding LastWatchedDate, StringFormat=\{0:dd.MM.yyyy\}}"
-                                    Width="150"/>
-                    <GridViewColumn Header="Средняя оценка"
-                                    DisplayMemberBinding="{Binding AverageRating, StringFormat=\{0:F1\}}"
-                                    Width="100"/>
-                    <GridViewColumn Header="Количество просмотров"
-                                    DisplayMemberBinding="{Binding ViewsCount}"
-                                    Width="100"/>
-                    <!--<GridViewColumn Width="100">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Click="Button_Click_1">X</Button>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
+                                    Width="350"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <!--<Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click">Добавить просмотр</Button>-->
         <StatusBar Grid.Row="2">
             <StatusBarItem>
                 <TextBlock Text="Готово"/>
