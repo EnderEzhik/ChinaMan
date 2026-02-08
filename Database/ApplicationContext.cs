@@ -1,14 +1,11 @@
-﻿using ChinaMan.Models;
+﻿using ChinaMan.Database.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ChinaMan.Database
 {
-    public class ApplicationContext : DbContext
+    internal class ApplicationContext : DbContext
     {
-        public DbSet<ViewedMovie> viewedMovies { get; set; } = null!;
+        internal DbSet<Film> Films { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
