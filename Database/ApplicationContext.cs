@@ -9,7 +9,7 @@ namespace ChinaMan.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=db.db;");
+            optionsBuilder.UseSqlite("Data Source=chinaman.db;");
         }
     }
 }
