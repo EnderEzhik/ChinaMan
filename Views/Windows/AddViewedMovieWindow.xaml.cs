@@ -58,7 +58,7 @@ namespace ChinaMan
             {
                 filmInfo.LastWatchedDate = newView.ViewedDate;
                 var views = dbContext.Views.Where(v => v.Film.Title == filmTitle);
-                filmInfo.AvgRating = views.Sum(v => v.Rating) / views.Count();
+                filmInfo.AvgRating = (float)views.Sum(v => v.Rating) / (float)views.Count();
                 filmInfo.ViewsCount = views.Count();
             }
             this.Close();
