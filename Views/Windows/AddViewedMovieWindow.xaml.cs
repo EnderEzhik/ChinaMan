@@ -19,9 +19,8 @@ namespace ChinaMan
             dbContext = App.CreateDbContext();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private Film GetOrCreateFilm(ApplicationContext dbContext, string filmTitle)
         {
-            string filmTitle = this.FilmTitleInput.Text;
             Film? film = dbContext.Films.FirstOrDefault(f => f.Title == filmTitle);
             if (film is null)
             {
@@ -31,6 +30,14 @@ namespace ChinaMan
                 };
                 dbContext.Films.Add(film);
             }
+            return film;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filmTitle = this.FilmTitleInput.Text;
+            
+            Film film = GetOrCreateFilm(dbContext, filmTitle);
 
             View newView = new View()
             {
@@ -38,7 +45,6 @@ namespace ChinaMan
                 Rating = int.Parse(this.ViewRatingInput.Text)
             };
             dbContext.Views.Add(newView);
-
             dbContext.SaveChanges();
 
             FilmInfoViewModel? filmInfo = MainViewModel.Instance.FilmInfoList.FirstOrDefault(f => f.Title == filmTitle);
