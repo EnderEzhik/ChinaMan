@@ -15,6 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Фильм: задел — ItemsSource/SelectedItem привязать к ViewModel -->
@@ -24,6 +25,47 @@
                  Height="28"
                  Margin="0,0,0,12"
                  VerticalContentAlignment="Center"/>
+
+        <ComboBox x:Name="ViewRatingInput"
+                  Grid.Row="2"
+                  Height="28"
+                  Margin="0,0,0,12"
+                  VerticalContentAlignment="Center">
+            <TextBlock>
+                0
+            </TextBlock>
+            <TextBlock>
+                1
+            </TextBlock>
+            <TextBlock>
+                2
+            </TextBlock>
+            <TextBlock>
+                3
+            </TextBlock>
+            <TextBlock>
+                4
+            </TextBlock>
+            <TextBlock>
+                5
+            </TextBlock>
+            <TextBlock>
+                6
+            </TextBlock>
+            <TextBlock>
+                7
+            </TextBlock>
+            <TextBlock>
+                8
+            </TextBlock>
+            <TextBlock>
+                9
+            </TextBlock>
+            <TextBlock>
+                10
+            </TextBlock>
+        </ComboBox>
+
         <!-- Кнопки: задел — Command привязать к ViewModel -->
         <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="CancelButton"
@@ -38,7 +80,6 @@
                     Width="80"
                     Height="28"
                     IsDefault="True"
-                    Command="{Binding SaveCommand}"
                     Click="SaveButton_Click"/>
         </StackPanel>
     </Grid>

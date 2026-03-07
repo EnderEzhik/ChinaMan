@@ -2,6 +2,7 @@
 using ChinaMan.Database;
 using ChinaMan.Database.Models;
 using ChinaMan.ViewModels;
+using ChinaMan.ViewModels.Items;
 
 namespace ChinaMan
 {
@@ -20,13 +21,46 @@ namespace ChinaMan
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Film newFilm = new Film()
+            string filmTitle = this.FilmTitleInput.Text;
+            Film? film = dbContext.Films.FirstOrDefault(f => f.Title == filmTitle);
+            if (film is null)
             {
-                Title = this.FilmTitleInput.Text
+                film = new Film()
+                {
+                    Title = filmTitle
+                };
+                dbContext.Films.Add(film);
+            }
+
+            View newView = new View()
+            {
+                Film = film,
+                Rating = int.Parse(this.ViewRatingInput.Text)
             };
-            dbContext.Films.Add(newFilm);
+            dbContext.Views.Add(newView);
+
             dbContext.SaveChanges();
-            MainViewModel.Instance.Films.Add(newFilm);
+
+            FilmInfoViewModel? filmInfo = MainViewModel.Instance.FilmInfoList.FirstOrDefault(f => f.Title == filmTitle);
+            if (filmInfo is null)
+            {
+                filmInfo = new FilmInfoViewModel()
+                {
+                    Title = filmTitle,
+                    AvgRating = newView.Rating,
+                    LastWatchedDate = newView.ViewedDate,
+                    ViewsCount = 1
+                };
+
+                MainViewModel.Instance.FilmInfoList.Add(filmInfo);
+            }
+            else
+            {
+                filmInfo.LastWatchedDate = newView.ViewedDate;
+                var views = dbContext.Views.Where(v => v.Film.Title == filmTitle);
+                filmInfo.AvgRating = views.Sum(v => v.Rating) / views.Count();
+                filmInfo.ViewsCount = views.Count();
+            }
             this.Close();
         }
 
