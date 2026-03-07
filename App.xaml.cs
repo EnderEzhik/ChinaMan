@@ -8,7 +8,12 @@ namespace ChinaMan
     /// </summary>
     public partial class App : Application
     {
-        public static void InitDatabase()
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            InitDatabase();
+            base.OnStartup(e);
+        }
+        internal static void InitDatabase()
         {
             using (ApplicationContext context = CreateDbContext())
             {
@@ -16,7 +21,7 @@ namespace ChinaMan
             }
         }
 
-        public static ApplicationContext CreateDbContext()
+        internal static ApplicationContext CreateDbContext()
         {
             return new ApplicationContext();
         }

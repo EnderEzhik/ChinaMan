@@ -1,7 +1,8 @@
 ﻿using System.Windows;
 using ChinaMan.Database;
-using ChinaMan.Models;
+using ChinaMan.Database.Models;
 using ChinaMan.ViewModels;
+using ChinaMan.ViewModels.Items;
 
 namespace ChinaMan
 {
@@ -10,31 +11,67 @@ namespace ChinaMan
     /// </summary>
     public partial class AddViewedMovieWindow : Window
     {
+        private readonly ApplicationContext dbContext;
+
         public AddViewedMovieWindow()
         {
             InitializeComponent();
+            dbContext = App.CreateDbContext();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private Film GetOrCreateFilm(ApplicationContext dbContext, string filmTitle)
         {
-            string title = this.MovieTitleInput.Text;
-            string description = this.MovieDescriptionInput.Text;
-            string rating = this.MovieRatingInput.Text;
-            DateTime viewedDate = this.MovieViewedDate.SelectedDate.HasValue ? this.MovieViewedDate.SelectedDate.Value : DateTime.Now;
-            viewedDate = viewedDate.Date;
-
-            ViewedMovie movieData = new ViewedMovie();
-            movieData.Title = title;
-            movieData.Description = description;
-            movieData.Rating = int.Parse(rating);
-            movieData.ViewedDate = viewedDate;
-
-            using (var dbContext = App.CreateDbContext())
+            Film? film = dbContext.Films.FirstOrDefault(f => f.Title == filmTitle);
+            if (film is null)
             {
-                DatabaseService.SaveViewedMovie(dbContext, movieData);
+                film = new Film()
+                {
+                    Title = filmTitle
+                };
+                dbContext.Films.Add(film);
             }
+            return film;
+        }
 
-            MainViewModel.Instance.ViewedMovies.Add(movieData);
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filmTitle = this.FilmTitleInput.Text;
+            
+            Film film = GetOrCreateFilm(dbContext, filmTitle);
+
+            View newView = new View()
+            {
+                Film = film,
+                Rating = int.Parse(this.ViewRatingInput.Text)
+            };
+            dbContext.Views.Add(newView);
+            dbContext.SaveChanges();
+
+            FilmInfoViewModel? filmInfo = MainViewModel.Instance.FilmInfoList.FirstOrDefault(f => f.Title == filmTitle);
+            if (filmInfo is null)
+            {
+                filmInfo = new FilmInfoViewModel()
+                {
+                    Title = filmTitle,
+                    AvgRating = newView.Rating,
+                    LastWatchedDate = newView.ViewedDate,
+                    ViewsCount = 1
+                };
+
+                MainViewModel.Instance.FilmInfoList.Add(filmInfo);
+            }
+            else
+            {
+                filmInfo.LastWatchedDate = newView.ViewedDate;
+                var views = dbContext.Views.Where(v => v.Film.Title == filmTitle);
+                filmInfo.AvgRating = (float)views.Sum(v => v.Rating) / (float)views.Count();
+                filmInfo.ViewsCount = views.Count();
+            }
+            this.Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }

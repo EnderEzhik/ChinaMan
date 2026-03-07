@@ -1,8 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using ChinaMan.Database;
-using ChinaMan.Models;
+﻿using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+using Microsoft.EntityFrameworkCore;
 using ChinaMan.ViewModels;
+using ChinaMan.ViewModels.Items;
 
 namespace ChinaMan
 {
@@ -11,12 +12,9 @@ namespace ChinaMan
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ApplicationContext dbContext;
         public MainWindow()
         {
             InitializeComponent();
-            App.InitDatabase();
-            dbContext = App.CreateDbContext();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -26,22 +24,38 @@ namespace ChinaMan
 
         private void ListView_Loaded(object sender, RoutedEventArgs e)
         {
-            var viewModel = (MainViewModel)this.DataContext;
-            var movies = dbContext.viewedMovies.ToList();
+            var dbContext = App.CreateDbContext();
 
-            foreach (var movie in movies)
+            var viewModel = (MainViewModel)this.DataContext;
+
+            dbContext.Films.Include(f => f.Views).Select(f => new FilmInfoViewModel()
             {
-                viewModel.ViewedMovies.Add(movie);
+                Title = f.Title,
+                LastWatchedDate = f.Views.OrderByDescending(v => v.ViewedDate).First().ViewedDate,
+                AvgRating = (float)f.Views.Sum(v => v.Rating) / (float)f.Views.Count(),
+                ViewsCount = f.Views.Count()
+            }).ToList().ForEach(viewModel.FilmInfoList.Add);
+        }
+    }
+
+    class TestConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var x = (float)value;
+            if (x % 1 == 0)
+            {
+                return ((int)x).ToString();
+            }
+            else
+            {
+                return Math.Round(x, 1).ToString(CultureInfo.InvariantCulture);
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var btnContext = (ViewedMovie)((Button)sender).DataContext;
-            var viewModel = (MainViewModel)this.DataContext;
-            viewModel.ViewedMovies.Remove(btnContext);
-            dbContext.viewedMovies.Remove(btnContext);
-            dbContext.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }

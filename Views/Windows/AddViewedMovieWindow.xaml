@@ -5,12 +5,82 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChinaMan"
         mc:Ignorable="d"
-        Title="AddViewedMovieWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <TextBox x:Name="MovieTitleInput" TextWrapping="Wrap" Text="Название" Width="120" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-200,0,0"/>
-        <TextBox x:Name="MovieDescriptionInput" TextWrapping="Wrap" Text="Описание" Width="120" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-100,0,0"/>
-        <TextBox x:Name="MovieRatingInput" TextWrapping="Wrap" Text="Оценка" Width="120" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Calendar x:Name="MovieViewedDate" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200" Margin="0,0,-500,-150"/>
-        <Button Content="Добавить" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0" Click="Button_Click"/>
+        Title="Добавить просмотр"
+        SizeToContent="Height"
+        Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid Margin="24,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Фильм: задел — ItemsSource/SelectedItem привязать к ViewModel -->
+        <TextBlock Grid.Row="0" Text="Фильм" Margin="0,0,0,4"/>
+        <TextBox x:Name="FilmTitleInput"
+                 Grid.Row="1"
+                 Height="28"
+                 Margin="0,0,0,12"
+                 VerticalContentAlignment="Center"/>
+
+        <ComboBox x:Name="ViewRatingInput"
+                  Grid.Row="2"
+                  Height="28"
+                  Margin="0,0,0,12"
+                  VerticalContentAlignment="Center">
+            <TextBlock>
+                0
+            </TextBlock>
+            <TextBlock>
+                1
+            </TextBlock>
+            <TextBlock>
+                2
+            </TextBlock>
+            <TextBlock>
+                3
+            </TextBlock>
+            <TextBlock>
+                4
+            </TextBlock>
+            <TextBlock>
+                5
+            </TextBlock>
+            <TextBlock>
+                6
+            </TextBlock>
+            <TextBlock>
+                7
+            </TextBlock>
+            <TextBlock>
+                8
+            </TextBlock>
+            <TextBlock>
+                9
+            </TextBlock>
+            <TextBlock>
+                10
+            </TextBlock>
+        </ComboBox>
+
+        <!-- Кнопки: задел — Command привязать к ViewModel -->
+        <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="CancelButton"
+                    Content="Отмена"
+                    Width="80"
+                    Height="28"
+                    Margin="0,0,8,0"
+                    IsCancel="True"
+                    Click="CancelButton_Click"/>
+            <Button x:Name="SaveButton"
+                    Content="Добавить"
+                    Width="80"
+                    Height="28"
+                    IsDefault="True"
+                    Click="SaveButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
