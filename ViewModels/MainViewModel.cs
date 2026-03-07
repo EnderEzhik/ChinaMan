@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using ChinaMan.Database.Models;
 using ChinaMan.ViewModels.Base;
+using ChinaMan.ViewModels.Items;
 
 namespace ChinaMan.ViewModels
 {
@@ -9,23 +9,23 @@ namespace ChinaMan.ViewModels
         public static MainViewModel Instance { get; private set; }
 
         #region Просмотренные фильмы
-        private ObservableCollection<Film> _films;
+        private ObservableCollection<FilmInfoViewModel> _filmInfoList;
 
         /// <summary>
         /// Список просмотренных фильмов
         /// </summary>
-        public ObservableCollection<Film> Films
+        public ObservableCollection<FilmInfoViewModel> FilmInfoList
         {
-            get => _films;
-            set => Set(ref _films, value);
+            get => _filmInfoList;
+            set => Set(ref _filmInfoList, value);
         }
         #endregion
 
         public MainViewModel()
         {
             Instance = this;
-            _films = new();
-            Films = new();
+            _filmInfoList = new();
+            FilmInfoList = new();
         }
     }
 }
