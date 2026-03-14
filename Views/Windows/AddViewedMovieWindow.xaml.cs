@@ -47,10 +47,10 @@ namespace ChinaMan
             dbContext.Views.Add(newView);
             dbContext.SaveChanges();
 
-            FilmInfoViewModel? filmInfo = MainViewModel.Instance.FilmInfoList.FirstOrDefault(f => f.Title == filmTitle);
+            ViewedMovieViewModel? filmInfo = ViewedMoviesViewModel.Instance.ViewedMoviesList.FirstOrDefault(f => f.Title == filmTitle);
             if (filmInfo is null)
             {
-                filmInfo = new FilmInfoViewModel()
+                filmInfo = new ViewedMovieViewModel()
                 {
                     Title = filmTitle,
                     AvgRating = newView.Rating,
@@ -58,7 +58,7 @@ namespace ChinaMan
                     ViewsCount = 1
                 };
 
-                MainViewModel.Instance.FilmInfoList.Add(filmInfo);
+                ViewedMoviesViewModel.Instance.ViewedMoviesList.Add(filmInfo);
             }
             else
             {

@@ -10,7 +10,7 @@
         <local:TestConverter x:Key="TestConverter"/>
     </Window.Resources>
     <Window.DataContext>
-        <vm:MainViewModel/>
+        <vm:ViewedMoviesViewModel/>
     </Window.DataContext>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -34,7 +34,7 @@
             <TabItem Header="Просмотрено">
                 <ListView
                     SelectionMode="Single"
-                    ItemsSource="{Binding FilmInfoList}"
+                    ItemsSource="{Binding ViewedMoviesList}"
                     Initialized="ListView_Initialized">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">

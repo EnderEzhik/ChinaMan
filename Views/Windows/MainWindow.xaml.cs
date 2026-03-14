@@ -26,15 +26,15 @@ namespace ChinaMan
         {
             var dbContext = App.CreateDbContext();
 
-            var viewModel = (MainViewModel)this.DataContext;
+            var viewModel = (ViewedMoviesViewModel)this.DataContext;
 
-            dbContext.Films.Include(f => f.Views).Select(f => new FilmInfoViewModel()
+            dbContext.Films.Include(f => f.Views).Select(f => new ViewedMovieViewModel()
             {
                 Title = f.Title,
                 LastWatchedDate = f.Views.OrderByDescending(v => v.ViewedDate).First().ViewedDate,
                 AvgRating = (float)f.Views.Sum(v => v.Rating) / (float)f.Views.Count(),
                 ViewsCount = f.Views.Count()
-            }).ToList().ForEach(viewModel.FilmInfoList.Add);
+            }).ToList().ForEach(viewModel.ViewedMoviesList.Add);
         }
     }
 
