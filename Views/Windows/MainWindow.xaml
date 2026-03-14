@@ -9,9 +9,6 @@
     <Window.Resources>
         <local:TestConverter x:Key="TestConverter"/>
     </Window.Resources>
-    <Window.DataContext>
-        <vm:ViewedMoviesViewModel/>
-    </Window.DataContext>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -36,6 +33,9 @@
                     SelectionMode="Single"
                     ItemsSource="{Binding ViewedMoviesList}"
                     Initialized="ListView_Initialized">
+                    <ListView.DataContext>
+                        <vm:ViewedMoviesViewModel/>
+                    </ListView.DataContext>
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название"
@@ -56,7 +56,11 @@
             </TabItem>
 
             <TabItem Header="Смотрю">
-                <ListView SelectionMode="Single">
+                <ListView SelectionMode="Single"
+                          ItemsSource="{Binding WatchingMovies}">
+                    <ListView.DataContext>
+                        <vm:WatchingMoviesViewModel/>
+                    </ListView.DataContext>
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название" Width="350"/>
@@ -66,7 +70,11 @@
             </TabItem>
 
             <TabItem Header="Хочу посмотреть">
-                <ListView SelectionMode="Single">
+                <ListView SelectionMode="Single"
+                          ItemsSource="{Binding WantToViewMovies}">
+                    <ListView.DataContext>
+                        <vm:WantToViewViewModel/>
+                    </ListView.DataContext>
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название" Width="350"/>
@@ -76,11 +84,15 @@
             </TabItem>
 
             <TabItem Header="Заброшено">
-                <ListView SelectionMode="Single">
+                <ListView SelectionMode="Single"
+                          ItemsSource="{Binding AbandonedMovies}">
+                    <ListView.DataContext>
+                        <vm:AbandonedMoviesViewModel/>
+                    </ListView.DataContext>
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
-                            <GridViewColumn Header="Название" Width="350"/>
-                            <GridViewColumn Header="Почему брошено" Width="450"/>
+                            <GridViewColumn Header="Название" Width="350" DisplayMemberBinding="{Binding Title}"/>
+                            <GridViewColumn Header="Почему брошено" Width="450" DisplayMemberBinding="{Binding Description}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

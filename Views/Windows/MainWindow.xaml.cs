@@ -4,6 +4,7 @@ using System.Windows.Data;
 using Microsoft.EntityFrameworkCore;
 using ChinaMan.ViewModels;
 using ChinaMan.ViewModels.Items;
+using System.Windows.Controls;
 
 namespace ChinaMan
 {
@@ -26,7 +27,7 @@ namespace ChinaMan
         {
             var dbContext = App.CreateDbContext();
 
-            var viewModel = (ViewedMoviesViewModel)this.DataContext;
+            var viewModel = (ViewedMoviesViewModel)((ListView)sender).DataContext;
 
             dbContext.Films.Include(f => f.Views).Select(f => new ViewedMovieViewModel()
             {
