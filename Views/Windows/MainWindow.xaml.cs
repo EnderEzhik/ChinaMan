@@ -22,7 +22,7 @@ namespace ChinaMan
             new AddViewedMovieWindow().Show();
         }
 
-        private void ListView_Loaded(object sender, RoutedEventArgs e)
+        private void ListView_Initialized(object sender, EventArgs e)
         {
             var dbContext = App.CreateDbContext();
 

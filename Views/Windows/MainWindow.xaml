@@ -28,28 +28,65 @@
                     Click="Button_Click"/>
         </DockPanel>
 
-        <ListView Grid.Row="1"
-                  Margin="0,0,0,10"
-                  SelectionMode="Single"
-                  ItemsSource="{Binding FilmInfoList}"
-                  Loaded="ListView_Loaded">
-            <ListView.View>
-                <GridView AllowsColumnReorder="False">
-                    <GridViewColumn Header="Название"
-                                    DisplayMemberBinding="{Binding Title}"
-                                    Width="350"/>
-                    <GridViewColumn Header="Дата последнего просмотра"
-                                    DisplayMemberBinding="{Binding LastWatchedDate, StringFormat=\{0:dd.MM.yyyy\}}"
-                                    Width="350"/>
-                    <GridViewColumn Header="Средняя оценка"
-                                    DisplayMemberBinding="{Binding AvgRating, Converter={StaticResource TestConverter}}"
-                                    Width="350"/>
-                    <GridViewColumn Header="Количество просмотров"
-                                    DisplayMemberBinding="{Binding ViewsCount}"
-                                    Width="150"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <TabControl 
+            Grid.Row="1"
+            Margin="0,0,0,10">
+            <TabItem Header="Просмотрено">
+                <ListView
+                    SelectionMode="Single"
+                    ItemsSource="{Binding FilmInfoList}"
+                    Initialized="ListView_Initialized">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False">
+                            <GridViewColumn Header="Название"
+                            DisplayMemberBinding="{Binding Title}"
+                            Width="350"/>
+                            <GridViewColumn Header="Дата последнего просмотра"
+                            DisplayMemberBinding="{Binding LastWatchedDate, StringFormat=\{0:dd.MM.yyyy\}}"
+                            Width="350"/>
+                            <GridViewColumn Header="Средняя оценка"
+                            DisplayMemberBinding="{Binding AvgRating, Converter={StaticResource TestConverter}}"
+                            Width="350"/>
+                            <GridViewColumn Header="Количество просмотров"
+                            DisplayMemberBinding="{Binding ViewsCount}"
+                            Width="150"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+
+            <TabItem Header="Смотрю">
+                <ListView SelectionMode="Single">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False">
+                            <GridViewColumn Header="Название" Width="350"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+
+            <TabItem Header="Хочу посмотреть">
+                <ListView SelectionMode="Single">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False">
+                            <GridViewColumn Header="Название" Width="350"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+
+            <TabItem Header="Заброшено">
+                <ListView SelectionMode="Single">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False">
+                            <GridViewColumn Header="Название" Width="350"/>
+                            <GridViewColumn Header="Почему брошено" Width="450"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
+
         <StatusBar Grid.Row="2">
             <StatusBarItem>
                 <TextBlock Text="Готово"/>
