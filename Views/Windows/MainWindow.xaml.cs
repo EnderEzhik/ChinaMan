@@ -20,7 +20,7 @@ namespace ChinaMan
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new AddViewedMovieWindow().Show();
+            new ViewedMovieWindow().Show();
         }
 
         private void ListView_Initialized(object sender, EventArgs e)

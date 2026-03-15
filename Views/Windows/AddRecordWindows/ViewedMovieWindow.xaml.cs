@@ -9,14 +9,11 @@ namespace ChinaMan
     /// <summary>
     /// Логика взаимодействия для AddViewedMovieWindow.xaml
     /// </summary>
-    public partial class AddViewedMovieWindow : Window
+    public partial class ViewedMovieWindow : Window
     {
-        private readonly ApplicationContext dbContext;
-
-        public AddViewedMovieWindow()
+        public ViewedMovieWindow()
         {
             InitializeComponent();
-            dbContext = App.CreateDbContext();
         }
 
         private Film GetOrCreateFilm(ApplicationContext dbContext, string filmTitle)
@@ -35,6 +32,8 @@ namespace ChinaMan
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            ApplicationContext dbContext = App.CreateDbContext();
+
             string filmTitle = this.FilmTitleInput.Text;
             
             Film film = GetOrCreateFilm(dbContext, filmTitle);
