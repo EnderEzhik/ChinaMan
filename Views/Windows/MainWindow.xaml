@@ -33,13 +33,13 @@
             Margin="0,0,0,10"
             SelectedItem="{Binding CurrentTabItem}">
             <TabItem Header="Просмотрено">
-                <ListView
+                <TabItem.DataContext>
+                    <vm:ViewedMoviesViewModel/>
+                </TabItem.DataContext>
+                <ListView x:Name="LIST"
                     SelectionMode="Single"
                     ItemsSource="{Binding ViewedMoviesList}"
                     Initialized="ListView_Initialized">
-                    <ListView.DataContext>
-                        <vm:ViewedMoviesViewModel/>
-                    </ListView.DataContext>
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название"
@@ -60,11 +60,11 @@
             </TabItem>
 
             <TabItem Header="Смотрю">
+                <TabItem.DataContext>
+                    <vm:WatchingMoviesViewModel/>
+                </TabItem.DataContext>
                 <ListView SelectionMode="Single"
                           ItemsSource="{Binding WatchingMovies}">
-                    <ListView.DataContext>
-                        <vm:WatchingMoviesViewModel/>
-                    </ListView.DataContext>
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название" Width="350"/>
@@ -74,11 +74,11 @@
             </TabItem>
 
             <TabItem Header="Хочу посмотреть">
+                <TabItem.DataContext>
+                    <vm:WantToViewViewModel/>
+                </TabItem.DataContext>
                 <ListView SelectionMode="Single"
                           ItemsSource="{Binding WantToViewMovies}">
-                    <ListView.DataContext>
-                        <vm:WantToViewViewModel/>
-                    </ListView.DataContext>
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название" Width="350"/>
@@ -88,11 +88,11 @@
             </TabItem>
 
             <TabItem Header="Заброшено">
+                <TabItem.DataContext>
+                    <vm:AbandonedMoviesViewModel/>
+                </TabItem.DataContext>
                 <ListView SelectionMode="Single"
                           ItemsSource="{Binding AbandonedMovies}">
-                    <ListView.DataContext>
-                        <vm:AbandonedMoviesViewModel/>
-                    </ListView.DataContext>
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название" Width="350" DisplayMemberBinding="{Binding Title}"/>
