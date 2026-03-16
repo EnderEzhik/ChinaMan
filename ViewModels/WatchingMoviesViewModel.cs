@@ -1,9 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using ChinaMan.ViewModels.Base;
+using ChinaMan.Views.Windows.AddRecordWindows;
 
 namespace ChinaMan.ViewModels
 {
-    internal class WatchingMoviesViewModel : BaseViewModel
+    internal class WatchingMoviesViewModel : MovieListBaseViewModel
     {
         private ObservableCollection<string> _watchingMovies;
         public ObservableCollection<string> WatchingMovies
@@ -12,7 +13,7 @@ namespace ChinaMan.ViewModels
             set => Set(ref _watchingMovies, value);
         }
 
-        public WatchingMoviesViewModel()
+        public WatchingMoviesViewModel() : base(typeof(WatchingMovieWindow))
         {
             _watchingMovies = new();
             WatchingMovies = new();

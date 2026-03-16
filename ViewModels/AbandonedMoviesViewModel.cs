@@ -1,9 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using ChinaMan.ViewModels.Base;
+using ChinaMan.Views.Windows.AddRecordWindows;
 
 namespace ChinaMan.ViewModels
 {
-    internal class AbandonedMoviesViewModel : BaseViewModel
+    internal class AbandonedMoviesViewModel : MovieListBaseViewModel
     {
         public class AbandonedMovie : BaseViewModel
         {
@@ -29,7 +30,7 @@ namespace ChinaMan.ViewModels
             set => Set(ref _abandonedMovies, value);
         }
 
-        public AbandonedMoviesViewModel()
+        public AbandonedMoviesViewModel() : base(typeof(AbandonedMovieWindow))
         {
             _abandonedMovies = new();
             AbandonedMovies = new();

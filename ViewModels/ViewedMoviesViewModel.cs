@@ -4,10 +4,8 @@ using ChinaMan.ViewModels.Items;
 
 namespace ChinaMan.ViewModels
 {
-    internal class ViewedMoviesViewModel : BaseViewModel
+    internal class ViewedMoviesViewModel : MovieListBaseViewModel
     {
-        public static ViewedMoviesViewModel Instance { get; private set; }
-
         #region Просмотренные фильмы
         private ObservableCollection<ViewedMovieViewModel> _viewedMoviesList;
 
@@ -21,9 +19,8 @@ namespace ChinaMan.ViewModels
         }
         #endregion
 
-        public ViewedMoviesViewModel()
+        public ViewedMoviesViewModel() : base(typeof(ViewedMovieWindow))
         {
-            Instance = this;
             _viewedMoviesList = new();
             ViewedMoviesList = new();
         }
