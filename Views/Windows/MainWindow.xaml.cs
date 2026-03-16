@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ChinaMan.ViewModels;
 using ChinaMan.ViewModels.Items;
 using System.Windows.Controls;
+using ChinaMan.ViewModels.Base;
 
 namespace ChinaMan
 {
@@ -20,7 +21,10 @@ namespace ChinaMan
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new ViewedMovieWindow().Show();
+            var viewModel = (MainViewModel)this.DataContext;
+            var tabItemViewModel = (MovieListBaseViewModel)viewModel.CurrentTabItem.DataContext;
+            var window = (Window)Activator.CreateInstance(tabItemViewModel.WindowType)!;
+            window.Show();
         }
 
         private void ListView_Initialized(object sender, EventArgs e)
