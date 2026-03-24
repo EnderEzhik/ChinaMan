@@ -39,7 +39,7 @@
                 <ListView x:Name="LIST"
                     SelectionMode="Single"
                     ItemsSource="{Binding ViewedMoviesList}"
-                    Initialized="ListView_Initialized">
+                    Initialized="LoadViewedMovies">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название"
@@ -64,7 +64,8 @@
                     <vm:WatchingMoviesViewModel/>
                 </TabItem.DataContext>
                 <ListView SelectionMode="Single"
-                          ItemsSource="{Binding WatchingMovies}">
+                          ItemsSource="{Binding WatchingMovies}"
+                          Initialized="LoadWatchingMovies">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название" Width="350"/>
@@ -75,10 +76,11 @@
 
             <TabItem Header="Хочу посмотреть">
                 <TabItem.DataContext>
-                    <vm:WantToViewViewModel/>
+                    <vm:WantToViewMovieViewModel/>
                 </TabItem.DataContext>
                 <ListView SelectionMode="Single"
-                          ItemsSource="{Binding WantToViewMovies}">
+                          ItemsSource="{Binding WantToViewMovies}"
+                          Initialized="LoadWantToViewMovies">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название" Width="350"/>
@@ -92,11 +94,12 @@
                     <vm:AbandonedMoviesViewModel/>
                 </TabItem.DataContext>
                 <ListView SelectionMode="Single"
-                          ItemsSource="{Binding AbandonedMovies}">
+                          ItemsSource="{Binding AbandonedMovies}"
+                          Initialized="LoadAbandonedMovies">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Название" Width="350" DisplayMemberBinding="{Binding Title}"/>
-                            <GridViewColumn Header="Почему брошено" Width="450" DisplayMemberBinding="{Binding Description}"/>
+                            <GridViewColumn Header="Почему брошено" Width="450" DisplayMemberBinding="{Binding AbandonReason}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
