@@ -11,9 +11,12 @@ namespace ChinaMan
     /// </summary>
     public partial class ViewedMovieWindow : Window
     {
-        public ViewedMovieWindow()
+        private readonly ViewedMoviesViewModel viewModel;
+
+        public ViewedMovieWindow(object viewModel)
         {
             InitializeComponent();
+            this.viewModel = (ViewedMoviesViewModel)viewModel;
         }
 
         private Film GetOrCreateFilm(ApplicationContext dbContext, string filmTitle)
@@ -35,18 +38,18 @@ namespace ChinaMan
             ApplicationContext dbContext = App.CreateDbContext();
 
             string filmTitle = this.FilmTitleInput.Text;
-            
+
             Film film = GetOrCreateFilm(dbContext, filmTitle);
 
-            View newView = new View()
+            var newView = new ViewedMovie()
             {
                 Film = film,
                 Rating = int.Parse(this.ViewRatingInput.Text)
             };
-            dbContext.Views.Add(newView);
+            dbContext.ViewedMovies.Add(newView);
             dbContext.SaveChanges();
 
-            ViewedMovieViewModel? filmInfo = ViewedMoviesViewModel.Instance.ViewedMoviesList.FirstOrDefault(f => f.Title == filmTitle);
+            ViewedMovieViewModel? filmInfo = viewModel.ViewedMoviesList.FirstOrDefault(f => f.Title == filmTitle);
             if (filmInfo is null)
             {
                 filmInfo = new ViewedMovieViewModel()
@@ -57,12 +60,12 @@ namespace ChinaMan
                     ViewsCount = 1
                 };
 
-                ViewedMoviesViewModel.Instance.ViewedMoviesList.Add(filmInfo);
+                viewModel.ViewedMoviesList.Add(filmInfo);
             }
             else
             {
                 filmInfo.LastWatchedDate = newView.ViewedDate;
-                var views = dbContext.Views.Where(v => v.Film.Title == filmTitle);
+                var views = dbContext.ViewedMovies.Where(v => v.Film.Title == filmTitle);
                 filmInfo.AvgRating = (float)views.Sum(v => v.Rating) / (float)views.Count();
                 filmInfo.ViewsCount = views.Count();
             }
