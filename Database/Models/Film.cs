@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public string Title { get; set; }
 
-        public List<View> Views { get; set; } = new();
+        public List<ViewedMovie> Views { get; set; } = new();
     }
 }

@@ -9,14 +9,14 @@ namespace ChinaMan
     /// <summary>
     /// Логика взаимодействия для AddViewedMovieWindow.xaml
     /// </summary>
-    public partial class AddViewedMovieWindow : Window
+    public partial class ViewedMovieWindow : Window
     {
-        private readonly ApplicationContext dbContext;
+        private readonly ViewedMoviesViewModel viewModel;
 
-        public AddViewedMovieWindow()
+        public ViewedMovieWindow(object viewModel)
         {
             InitializeComponent();
-            dbContext = App.CreateDbContext();
+            this.viewModel = (ViewedMoviesViewModel)viewModel;
         }
 
         private Film GetOrCreateFilm(ApplicationContext dbContext, string filmTitle)
@@ -35,22 +35,24 @@ namespace ChinaMan
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            ApplicationContext dbContext = App.CreateDbContext();
+
             string filmTitle = this.FilmTitleInput.Text;
-            
+
             Film film = GetOrCreateFilm(dbContext, filmTitle);
 
-            View newView = new View()
+            var newView = new ViewedMovie()
             {
                 Film = film,
                 Rating = int.Parse(this.ViewRatingInput.Text)
             };
-            dbContext.Views.Add(newView);
+            dbContext.ViewedMovies.Add(newView);
             dbContext.SaveChanges();
 
-            FilmInfoViewModel? filmInfo = MainViewModel.Instance.FilmInfoList.FirstOrDefault(f => f.Title == filmTitle);
+            ViewedMovieViewModel? filmInfo = viewModel.ViewedMoviesList.FirstOrDefault(f => f.Title == filmTitle);
             if (filmInfo is null)
             {
-                filmInfo = new FilmInfoViewModel()
+                filmInfo = new ViewedMovieViewModel()
                 {
                     Title = filmTitle,
                     AvgRating = newView.Rating,
@@ -58,12 +60,12 @@ namespace ChinaMan
                     ViewsCount = 1
                 };
 
-                MainViewModel.Instance.FilmInfoList.Add(filmInfo);
+                viewModel.ViewedMoviesList.Add(filmInfo);
             }
             else
             {
                 filmInfo.LastWatchedDate = newView.ViewedDate;
-                var views = dbContext.Views.Where(v => v.Film.Title == filmTitle);
+                var views = dbContext.ViewedMovies.Where(v => v.Film.Title == filmTitle);
                 filmInfo.AvgRating = (float)views.Sum(v => v.Rating) / (float)views.Count();
                 filmInfo.ViewsCount = views.Count();
             }

@@ -2,7 +2,7 @@ using ChinaMan.ViewModels.Base;
 
 namespace ChinaMan.ViewModels.Items
 {
-    internal class FilmInfoViewModel : BaseViewModel
+    internal class ViewedMovieViewModel : BaseViewModel
     {
         public string Title { get; set; }
 
