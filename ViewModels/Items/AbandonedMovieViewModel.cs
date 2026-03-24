@@ -2,7 +2,7 @@
 
 namespace ChinaMan.ViewModels.Items
 {
-    public class AbandonedMovieViewModel : BaseViewModel
+    internal class AbandonedMovieViewModel : BaseViewModel
     {
         public string Title { get; set; }
 
