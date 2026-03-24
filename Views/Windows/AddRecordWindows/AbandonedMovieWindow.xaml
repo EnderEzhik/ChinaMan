@@ -27,7 +27,7 @@
                  VerticalContentAlignment="Center"/>
 
         <TextBlock Grid.Row="2" Text="Почему заброшен" Margin="0,0,0,4"/>
-        <TextBox x:Name="WhyAbandonedInput"
+        <TextBox x:Name="AbandonedReasonInput"
          Grid.Row="3"
          Height="28"
          Margin="0,0,0,12"

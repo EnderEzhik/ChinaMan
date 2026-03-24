@@ -1,4 +1,8 @@
-﻿using System;
+﻿using ChinaMan.Database;
+using ChinaMan.Database.Models;
+using ChinaMan.ViewModels;
+using ChinaMan.ViewModels.Items;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,19 +21,58 @@ namespace ChinaMan.Views.Windows.AddRecordWindows
     /// </summary>
     public partial class AbandonedMovieWindow : Window
     {
-        public AbandonedMovieWindow()
+        private readonly AbandonedMoviesViewModel viewModel;
+        public AbandonedMovieWindow(object viewModel)
         {
             InitializeComponent();
+            this.viewModel = (AbandonedMoviesViewModel)viewModel;
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private Film GetOrCreateFilm(ApplicationContext dbContext, string filmTitle)
         {
-            throw new NotImplementedException();
+            Film? film = dbContext.Films.FirstOrDefault(f => f.Title == filmTitle);
+            if (film is null)
+            {
+                film = new Film()
+                {
+                    Title = filmTitle
+                };
+                dbContext.Films.Add(film);
+            }
+            return film;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            using var dbContext = App.CreateDbContext();
+
+            string filmTitle = this.FilmTitleInput.Text;
+            string abandonedReason = this.AbandonedReasonInput.Text;
+
+            Film film = GetOrCreateFilm(dbContext, filmTitle);
+
+            var newAbandonedMovie = new AbandonedMovie()
+            {
+                Film = film,
+                AbandonReason = abandonedReason
+            };
+
+            dbContext.AbandonedMovies.Add(newAbandonedMovie);
+            dbContext.SaveChanges();
+
+            var filmInfo = new AbandonedMovieViewModel()
+            {
+                Title = filmTitle,
+                AbandonReason = abandonedReason
+            };
+
+            viewModel.AbandonedMovies.Add(filmInfo);
+            this.Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
