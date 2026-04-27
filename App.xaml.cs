@@ -13,10 +13,12 @@ namespace ChinaMan
             InitDatabase();
             base.OnStartup(e);
         }
+
         internal static void InitDatabase()
         {
             using (ApplicationContext context = CreateDbContext())
             {
+                context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
             }
         }
